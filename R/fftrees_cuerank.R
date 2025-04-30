@@ -379,7 +379,18 @@ fftrees_cuerank <- function(x = NULL,
 
         # Handle 2 special cases:
         if (length(best_result_index) > 1) { # 1. multiple best indices:
-          best_result_index <- best_result_index[1]  # take the 1st   ToDo: Is this the best way? Randomize?
+          # best_result_index <- best_result_index[1]  # take the 1st   ToDo: Is this the best way? Randomize?
+
+          # Calculate category counts
+          if (substr(cue_i_class, 1, 1) %in% c("f", "c", "l")) {
+            # Rank cues based on the least amount of threshold categories
+            tie_cues <- cue_i_stats[best_result_index, ]
+            n_cats <- sapply(strsplit(as.character(tie_cues$threshold), ","), length)
+            best_result_index <- which(best_result_index == min(n_cats, na.rm = TRUE))
+          }
+
+          # If there are still ties, pick the first
+          best_result_index = best_result_index[1]
         }
 
         if (is.na(best_result_index)) { # 2. NO best index:

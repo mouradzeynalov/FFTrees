@@ -378,7 +378,8 @@ fftrees_cuerank <- function(x = NULL,
         # Note that cost_dec and cost are NEGATIVE in cue_i_stats (so that goal.threshold == "cost" is MINimized)!
 
         # Handle 2 special cases:
-        print("This is the handler for the special edge cases")
+        cat("The number of max thresholds for ", cue_i_name, " is ", length(best_result_index), "\n")
+        print(cue_i_stats[best_result_index,])
         if (length(best_result_index) > 1) { # 1. multiple best indices:
           # best_result_index <- best_result_index[1]  # take the 1st   ToDo: Is this the best way? Randomize?
             print("Handling more than one best result index")

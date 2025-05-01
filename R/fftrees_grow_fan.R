@@ -319,9 +319,13 @@ fftrees_grow_fan <- function(x,
                  Inf
              }
           })
-          print("The output thresholds")
+          print("The output indicies")
           print(n_thres)
+          cat("The class of nthres: ",  class(n_thres), "\n")
           cue_best_i <- which(cue_best_i == max(n_thres, na.rm = TRUE))
+          print("The best Threshold:")
+          print(cue_best_i)
+          print(cue_best_df_current$threshold[cue_best_i])
 
           # If there are still ties pick the first
           cue_best_i <- cue_best_i[1]

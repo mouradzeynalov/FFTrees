@@ -311,9 +311,7 @@ fftrees_grow_fan <- function(x,
              cat("The cue_best_df class is: ", cue_best_df_current$class[i], "\n")
              if (substr(cue_best_df_current$class[i], 1, 1) %in% c("f", "c", "l")) {
                  # Factor, rank by num thresholds
-                 print("Factor cue, ranking by the number of thresholds")
                  cat("The index is : ", i, "\n")
-                 print("The threshold string:")
                  print(cue_best_df_current$threshold[[i]])
                  length(strsplit(as.character(cue_best_df_current$threshold[i]), ",")[[1]])
              } else {
@@ -330,7 +328,11 @@ fftrees_grow_fan <- function(x,
           print(cue_best_i)
           print(cue_best_df_current$threshold[cue_best_i])
 
-          # If there are still ties pick the first
+          # If there are still ties pick the thresholds with the least characters
+          if (length(cue_best_i) > 1) {
+              n_char <- nchar(cue_best_df_current$threshold[cue_best_i])
+              cue_best_i <- cue_best_i[which(n_char == min(n_char, na.rm = TRUE))]
+          }
           cue_best_i <- cue_best_i[1]
           print("The best Threshold:")
           print(cue_best_i)

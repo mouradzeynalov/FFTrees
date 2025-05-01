@@ -305,13 +305,16 @@ fftrees_grow_fan <- function(x,
         # If there is a tie between cue performance, take the one with the least amount of threshold categories:
         if (length(cue_best_i) > 1) {
           print("There was a tie in the cue performance")
+          print(cue_best_i)
           n_thres <- sapply(seq_len(nrow(cue_best_i)), function(i) {
+             cat("The current element in the sequence is: ", i, "\n")
              if (substr(cue_best_df_current$class[i], 1, 1) %in% c("f", "c", "l")) {
                  # Factor, rank by num thresholds
                  print("Factor cue, ranking by the number of thresholds")
                  sapply(strsplit(as.character(cue_best_df_current$threshold[i]), ","), length)
              } else {
                  # Numeric, set threshold to infinity
+                 print("Numeric cue, setting to infinity")
                  Inf
              }
           })

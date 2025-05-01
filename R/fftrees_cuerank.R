@@ -378,15 +378,12 @@ fftrees_cuerank <- function(x = NULL,
         # Note that cost_dec and cost are NEGATIVE in cue_i_stats (so that goal.threshold == "cost" is MINimized)!
 
         # Handle 2 special cases:
-        cat("The number of max thresholds for ", cue_i_name, " is ", length(best_result_index), "\n")
-        print(cue_i_stats[best_result_index,])
         if (length(best_result_index) > 1) { # 1. multiple best indices:
+          #  defined thresholds per cue have a tie
           # best_result_index <- best_result_index[1]  # take the 1st   ToDo: Is this the best way? Randomize?
-            print("Handling more than one best result index")
 
           # Calculate category counts
           if (substr(cue_i_class, 1, 1) %in% c("f", "c", "l")) {
-              print("dealing with factor cues")
             # Rank cues based on the least amount of threshold categories
             tie_cues <- cue_i_stats[best_result_index, ]
             n_cats <- sapply(strsplit(as.character(tie_cues$threshold), ","), length)

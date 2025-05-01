@@ -302,9 +302,27 @@ fftrees_grow_fan <- function(x,
         performance_max <- max(cue_best_df_current[[x$params$goal.chase]], na.rm = TRUE)
         cue_best_i <- which(dplyr::near(cue_best_df_current[[x$params$goal.chase]], performance_max))
 
-        # If there is a tie, take the first:
+        # If there is a tie between cue performance, take the one with the least amount of threshold categories:
         if (length(cue_best_i) > 1) {
+          print("There was a tie in the cue performance")
+          n_thres <- sapply(seq_len(nrow(cue_best_i)), function(i) {
+             if (substr(cue_best_df_current$class[i], 1, 1) %in% c("f", "c", "l")) {
+                 # Factor, rank by num thresholds
+                 print("Factor cue, ranking by the number of thresholds")
+                 sapply(strsplit(as.character(cue_best_df_current$threshold[i]), ","), length)
+             } else {
+                 # Numeric, set threshold to infinity
+                 Inf
+             }
+          })
+          print("The output thresholds")
+          print(n_thres)
+          cue_best_i <- which(cue_best_i == max(n_thres, na.rm = TRUE))
+
+          # If there are still ties pick the first
           cue_best_i <- cue_best_i[1]
+          print("The best Threshold:")
+          print(cue_best_i)
         }
 
         cues_name_new <- cue_best_df_current$cue[cue_best_i]

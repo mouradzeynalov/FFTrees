@@ -313,10 +313,8 @@ fftrees_grow_fan <- function(x,
                  # Factor, rank by num thresholds
                  cat("The index is : ", i, "\n")
                  print(cue_best_df_current$threshold[[i]])
-                 print("The string after splitting")
-                 cue_clean <- iconv(cue_best_df_current$threshold[[i]], c("latin1", "UTF-8", "windows-1252"), "UTF-8//TRANSLIT")
-                 print(strsplit(as.character(cue_clean, ",", perl = TRUE, useBytes = FALSE, fixed = TRUE))[[1]])
-                 length(strsplit(as.character(cue_clean, ",", perl = TRUE, useBytes = FALSE, fixed = TRUE))[[1]])
+                 len <- length(strsplit(as.character(cue_clean, ",", perl = TRUE, useBytes = FALSE, fixed = TRUE))[[1]])
+                 ifelse(!is.na(len), len, Inf)
              } else {
                  # Numeric, set threshold to infinity
                  print("Numeric cue, setting to infinity")

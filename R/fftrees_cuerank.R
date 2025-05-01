@@ -381,6 +381,7 @@ fftrees_cuerank <- function(x = NULL,
         if (length(best_result_index) > 1) { # 1. multiple best indices:
           #  defined thresholds per cue have a tie
           # best_result_index <- best_result_index[1]  # take the 1st   ToDo: Is this the best way? Randomize?
+          cat("Mulitple best thresholds for cue: ", cue_i_name, "\n")
 
           # Calculate category counts
           if (substr(cue_i_class, 1, 1) %in% c("f", "c", "l")) {
@@ -392,7 +393,6 @@ fftrees_cuerank <- function(x = NULL,
 
           # If there are still ties, pick the first
           best_result_index = best_result_index[1]
-          print(best_result_index)
         }
 
         if (is.na(best_result_index)) { # 2. NO best index:

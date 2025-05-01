@@ -315,7 +315,7 @@ fftrees_grow_fan <- function(x,
                  print(cue_best_df_current$threshold[[i]])
                  print("The string after splitting")
                  cue_clean <- iconv(cue_best_df_current$threshold[[i]], c("latin1", "UTF-8", "windows-1252"), "UTF-8//TRANSLIT")
-                 print(strsplit(as.character(cue_clean, ",", perl = TRUE, useBytes = FALSE, fixed = TRUE)[[1]])
+                 print(strsplit(as.character(cue_clean, ",", perl = TRUE, useBytes = FALSE, fixed = TRUE))[[1]])
                  length(strsplit(as.character(cue_clean, ",", perl = TRUE, useBytes = FALSE, fixed = TRUE))[[1]])
              } else {
                  # Numeric, set threshold to infinity

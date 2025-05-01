@@ -314,7 +314,7 @@ fftrees_grow_fan <- function(x,
                  cat("The index is : ", i, "\n")
                  print(cue_best_df_current$threshold[[i]])
                  split <- strsplit(as.character(cue_best_df_current$threshold[[i]]), split = ",")[[1]]
-                 ifelse(!is.na(split), length(split), Inf)
+                 ifelse(all(is.na(split)), Inf, length(split))
              } else {
                  # Numeric, set threshold to infinity
                  print("Numeric cue, setting to infinity")

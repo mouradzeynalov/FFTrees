@@ -306,24 +306,25 @@ fftrees_grow_fan <- function(x,
         if (length(cue_best_i) > 1) {
           print("There was a tie in the cue performance")
           cat("Number of rows in cue_best_i: ", nrow(cue_best_i), " and the length ", length(cue_best_i), "\n")
-          n_thres <- sapply(seq_len(length(cue_best_i)), function(i) {
+          n_thres <- lapply(seq_along(cue_best_i), function(i) {
              cat("The current element in the sequence is: ", i, "\n")
              cat("The cue_best_df class is: ", cue_best_df_current$class[i], "\n")
              if (substr(cue_best_df_current$class[i], 1, 1) %in% c("f", "c", "l")) {
                  # Factor, rank by num thresholds
                  print("Factor cue, ranking by the number of thresholds")
-                 lapply(strsplit(as.character(cue_best_df_current$threshold[i]), ","), length, drop = FALSE)
+                 length(strsplit(as.character(cue_best_df_current$threshold[i]), ",")[[1]])
              } else {
                  # Numeric, set threshold to infinity
                  print("Numeric cue, setting to infinity")
                  Inf
              }
           })
+          names(n_thes) <- cue_best_i
           print("The output indicies")
           print(n_thres)
           cat("The class of nthres: ",  class(n_thres), "\n")
-          cat("The max of nthres: ",  max(n_thres, na.rm = TRUE), "\n")
-          cue_best_i <- which(n_thres == max(n_thres, na.rm = TRUE))
+          cat("The max of nthres: ",  min(n_thres, na.rm = TRUE), "\n")
+          cue_best_i <- which(n_thres == min(n_thres, na.rm = TRUE))
           print("The best Threshold:")
           print(cue_best_i)
           print(cue_best_df_current$threshold[cue_best_i])

@@ -304,40 +304,24 @@ fftrees_grow_fan <- function(x,
 
         # If there is a tie between cue performance, take the one with the least amount of threshold categories:
         if (length(cue_best_i) > 1) {
-          print("There was a tie in the cue performance")
-          cat("Number of rows in cue_best_i: ", nrow(cue_best_i), " and the length ", length(cue_best_i), "\n")
           n_thres <- sapply(cue_best_i, function(i) {
-             cat("The current element in the sequence is: ", i, "\n")
-             cat("The cue_best_df class is: ", cue_best_df_current$class[i], "\n")
              if (substr(cue_best_df_current$class[i], 1, 1) %in% c("f", "c", "l")) {
                  # Factor, rank by num thresholds
-                 cat("The index is : ", i, "\n")
-                 print(cue_best_df_current$threshold[[i]])
                  split <- strsplit(as.character(cue_best_df_current$threshold[[i]]), split = ",")[[1]]
                  ifelse(all(is.na(split)), Inf, length(split))
              } else {
                  # Numeric, set threshold to infinity
-                 print("Numeric cue, setting to infinity")
                  Inf
              }
           })
-          print("The output indicies")
-          print(n_thres)
-          cat("The min of nthres: ",  min(n_thres, na.rm = TRUE), "\n")
           cue_best_i <- cue_best_i[which(n_thres == min(n_thres, na.rm = TRUE))]
-          print("The best Threshold:")
-          print(cue_best_i)
-          print(cue_best_df_current$threshold[cue_best_i])
 
           # If there are still ties pick the thresholds with the least characters
-          if (length(cue_best_i) > 1) {
-              print("there was still a tie")
-              n_char <- nchar(cue_best_df_current$threshold[cue_best_i])
-              cue_best_i <- cue_best_i[which(n_char == min(n_char, na.rm = TRUE))]
-              cue_best_i <- cue_best_i[1]
-          }
-          print("The best Threshold:")
-          print(cue_best_i)
+          # if (length(cue_best_i) > 1) {
+          #     n_char <- nchar(cue_best_df_current$threshold[cue_best_i])
+          #     cue_best_i <- cue_best_i[which(n_char == min(n_char, na.rm = TRUE))]
+          # }
+          cue_best_i <- cue_best_i[1]
         }
 
         cues_name_new <- cue_best_df_current$cue[cue_best_i]

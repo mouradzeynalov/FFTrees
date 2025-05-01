@@ -313,7 +313,9 @@ fftrees_grow_fan <- function(x,
                  # Factor, rank by num thresholds
                  cat("The index is : ", i, "\n")
                  print(cue_best_df_current$threshold[[i]])
-                 length(strsplit(cue_best_df_current$threshold[i], ",")[[1]])
+                 print("The string after splitting")
+                 print(strsplit(as.character(cue_best_df_current$threshold[i]), ","))
+                 length(strsplit(as.character(cue_best_df_current$threshold[i]), ",")[[1]])
              } else {
                  # Numeric, set threshold to infinity
                  print("Numeric cue, setting to infinity")
@@ -332,7 +334,6 @@ fftrees_grow_fan <- function(x,
           if (length(cue_best_i) > 1) {
               print("there was still a tie")
               n_char <- nchar(cue_best_df_current$threshold[cue_best_i])
-              print(n_char)
               cue_best_i <- cue_best_i[which(n_char == min(n_char, na.rm = TRUE))]
               cue_best_i <- cue_best_i[1]
           }

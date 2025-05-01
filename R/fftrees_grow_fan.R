@@ -306,7 +306,7 @@ fftrees_grow_fan <- function(x,
         if (length(cue_best_i) > 1) {
           print("There was a tie in the cue performance")
           cat("Number of rows in cue_best_i: ", nrow(cue_best_i), " and the length ", length(cue_best_i), "\n")
-          n_thres <- lapply(seq_along(cue_best_i), function(i) {
+          n_thres <- sapply(seq_along(cue_best_i), function(i) {
              cat("The current element in the sequence is: ", i, "\n")
              cat("The cue_best_df class is: ", cue_best_df_current$class[i], "\n")
              if (substr(cue_best_df_current$class[i], 1, 1) %in% c("f", "c", "l")) {

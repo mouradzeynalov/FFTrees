@@ -313,6 +313,8 @@ fftrees_grow_fan <- function(x,
                  # Factor, rank by num thresholds
                  print("Factor cue, ranking by the number of thresholds")
                  cat("The index is : ", i, "\n")
+                 print("The threshold string:")
+                 print(cue_best_df_current$threshold[[i]])
                  length(strsplit(as.character(cue_best_df_current$threshold[i]), ",")[[1]])
              } else {
                  # Numeric, set threshold to infinity
@@ -320,12 +322,11 @@ fftrees_grow_fan <- function(x,
                  Inf
              }
           })
-          names(n_thres) <- cue_best_i
           print("The output indicies")
           print(n_thres)
           cat("The class of nthres: ",  class(n_thres), "\n")
-          cat("The max of nthres: ",  min(n_thres, na.rm = TRUE), "\n")
-          cue_best_i <- which(n_thres == min(n_thres, na.rm = TRUE))
+          cat("The min of nthres: ",  min(n_thres, na.rm = TRUE), "\n")
+          cue_best_i <- cue_best_i[which(n_thres == min(n_thres, na.rm = TRUE))]
           print("The best Threshold:")
           print(cue_best_i)
           print(cue_best_df_current$threshold[cue_best_i])

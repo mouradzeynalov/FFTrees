@@ -313,8 +313,8 @@ fftrees_grow_fan <- function(x,
                  # Factor, rank by num thresholds
                  cat("The index is : ", i, "\n")
                  print(cue_best_df_current$threshold[[i]])
-                 x = strsplit(as.character(cue_best_df_current$threshold[[i]], ",", perl = TRUE, useBytes = FALSE, fixed = TRUE))[[1]]
-                 ifelse(!is.na(x), length(x), Inf)
+                 split <- strsplit(as.character(cue_best_df_current$threshold[[i]]), split = ",", fixed = TRUE)[[1]]
+                 ifelse(!is.na(split), length(split), Inf)
              } else {
                  # Numeric, set threshold to infinity
                  print("Numeric cue, setting to infinity")

@@ -139,7 +139,7 @@ allow_NA_pred <- TRUE  # (global constant)
 
 # Allow NA cases in criterion (as logical)?
 
-allow_NA_crit <- FALSE  # (global constant)
+allow_NA_crit <- TRUE  # (global constant)
 
 
 
@@ -149,7 +149,7 @@ allow_NA_crit <- FALSE  # (global constant)
 # - TRUE replaces NA in numeric predictors (currently by their mean);
 # - FALSE (by default) keeps NA values (but tries handling them later)
 
-replace_NA_num_pred <- FALSE  # (global constant)
+replace_NA_num_pred <- TRUE  # (global constant)
 
 
 

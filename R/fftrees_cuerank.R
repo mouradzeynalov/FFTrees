@@ -160,6 +160,7 @@ fftrees_cuerank <- function(x = NULL,
             cue_i_levels <- sort(unique(unlist(cue_i_v)))
 
             # If too long, reduce to numthresh.n:
+            ### MARKED FOR LATER, CAN ADD THE INF THRESHOLD AS AN INDEX
             if (length(cue_i_levels) > x$params$numthresh.n) {
               indicies <- round(seq(1, length(cue_i_levels), length.out = x$params$numthresh.n), 0)
               cue_i_levels <- cue_i_levels[indicies]

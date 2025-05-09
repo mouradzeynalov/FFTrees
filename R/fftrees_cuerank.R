@@ -361,8 +361,8 @@ fftrees_cuerank <- function(x = NULL,
         } # if b. factor/character/logical cue.
 
         # # Get feedback (4debugging):
-        # print(paste0(cue_i, ": cue_i_stats of cue_i_name = ", cue_i_name, ":"))
-        # print(cue_i_stats)
+        print(paste0(cue_i, ": cue_i_stats of cue_i_name = ", cue_i_name, ":"))
+        print(cue_i_stats)
 
         # Re-set rownames:
         # rownames(cue_i_stats) <- 1:nrow(cue_i_stats)

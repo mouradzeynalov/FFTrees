@@ -451,6 +451,8 @@ fftrees_cuerank <- function(x = NULL,
   } # for (cue_i).
 
 
+  print("cue rankings after all cues")
+  print(cuerank_df)
 
   # Set rownames: ----
 
@@ -470,6 +472,8 @@ fftrees_cuerank <- function(x = NULL,
   # Store in x$cues$stats (as df): ----
 
   x$cues$stats[[data]] <- cuerank_df
+  print("cue stats")
+  print(x$cues$stats[[data]])
 
 
   # Progress bar:

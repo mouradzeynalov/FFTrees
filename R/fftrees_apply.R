@@ -210,19 +210,20 @@ fftrees_apply <- function(x,
 
   for (tree_i in 1:n_trees) {
 
-    # print(paste0("tree ", tree_i, ":"))  # 4debugging
+    print(paste0("tree ", tree_i, ":"))  # 4debugging
 
     # NEW code start: ----
 
     # Get ID of tree_defs$tree for tree_i value (to consider all trees in turn):
     tree_i_id <- tree_defs$tree[tree_i]
-    # print(paste0("\u2014 Current tree_i = ", tree_i, " corresponds to tree_i_id = ", tree_i_id)) # 4debugging
+    print(paste0("\u2014 Current tree_i = ", tree_i, " corresponds to tree_i_id = ", tree_i_id)) # 4debugging
 
-    # print(tree_defs)  # 4debugging
+    print(tree_defs)  # 4debugging
 
     # Read FFT definition (with 1 row per tree) into df (with 1 row per node):
     cur_fft_df <- read_fft_df(ffts_df = tree_defs, tree = tree_i_id)
-    # print(cur_fft_df)  # 4debugging
+    print("The current fft df:")
+    print(cur_fft_df)  # 4debugging
 
     # Get variables of cur_fft_df (as vectors):
     class_v     <- cur_fft_df$class

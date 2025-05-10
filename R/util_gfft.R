@@ -99,7 +99,7 @@ read_fft_df <- function(ffts_df, tree = 1){
     stop(paste0("No FFT #", tree, " found in ffts_df"))
   }
 
-  print(ffts_df)  # 4debugging
+  # print(ffts_df)  # 4debugging
 
   # Get 1 line by tree ID (ffts_df may be unsorted):
   cur_fft <- ffts_df[(ffts_df$tree == tree), ]
@@ -116,19 +116,11 @@ read_fft_df <- function(ffts_df, tree = 1){
   classes    <- trimws(unlist(strsplit(cur_fft$classes,    split = fft_node_sep, fixed = TRUE)))
   cues       <- trimws(unlist(strsplit(cur_fft$cues,       split = fft_node_sep, fixed = TRUE)))
   directions <- trimws(unlist(strsplit(cur_fft$directions, split = fft_node_sep, fixed = TRUE)))
-  print("The raw split string")
-  print(strsplit(cur_fft$thresholds, split = fft_node_sep, fixed = TRUE))
   thresholds <- trimws(unlist(strsplit(cur_fft$thresholds, split = fft_node_sep, fixed = TRUE)))
   exits      <- trimws(unlist(strsplit(cur_fft$exits,      split = fft_node_sep, fixed = TRUE)))
 
   # Verify that the vector lengths (of tree definition parts) correspond to n_nodes:
   v_lengths <- sapply(list(classes, cues, directions, thresholds, exits), FUN = length)
-
-    print("The definitions of the thresholds")
-    print(thresholds)
-
-    print("The definitions of the nodes")
-    print(n_nodes)
 
   if (!all(v_lengths == n_nodes)) { # note error:
 

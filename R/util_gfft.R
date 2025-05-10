@@ -103,21 +103,21 @@ read_fft_df <- function(ffts_df, tree = 1){
 
   # Get 1 line by tree ID (ffts_df may be unsorted):
   cur_fft <- ffts_df[(ffts_df$tree == tree), ]
-  print(cur_fft)  # 4debugging
+  # print(cur_fft)  # 4debugging
 
   # Key values:
-  fft_node_sep <- ";"  # (local constant)
+  # fft_node_sep <- ";"  # (local constant)
   n_nodes <- cur_fft$nodes
 
 
   # Main: ----
 
-  print("Thresholds before split")
-  print(cur_fft$thresholds)
   # Extract elements of definition (as vectors):
   classes    <- trimws(unlist(strsplit(cur_fft$classes,    split = fft_node_sep, fixed = TRUE)))
   cues       <- trimws(unlist(strsplit(cur_fft$cues,       split = fft_node_sep, fixed = TRUE)))
   directions <- trimws(unlist(strsplit(cur_fft$directions, split = fft_node_sep, fixed = TRUE)))
+  print("The raw split string")
+  print(strsplit(cur_fft$thresholds, split = fft_node_sep, fixed = TRUE))
   thresholds <- trimws(unlist(strsplit(cur_fft$thresholds, split = fft_node_sep, fixed = TRUE)))
   exits      <- trimws(unlist(strsplit(cur_fft$exits,      split = fft_node_sep, fixed = TRUE)))
 

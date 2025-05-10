@@ -99,11 +99,11 @@ read_fft_df <- function(ffts_df, tree = 1){
     stop(paste0("No FFT #", tree, " found in ffts_df"))
   }
 
-  # print(ffts_df)  # 4debugging
+  print(ffts_df)  # 4debugging
 
   # Get 1 line by tree ID (ffts_df may be unsorted):
   cur_fft <- ffts_df[(ffts_df$tree == tree), ]
-  # print(cur_fft)  # 4debugging
+  print(cur_fft)  # 4debugging
 
   # Key values:
   # fft_node_sep <- ";"  # (local constant)
@@ -112,6 +112,8 @@ read_fft_df <- function(ffts_df, tree = 1){
 
   # Main: ----
 
+  print("Thresholds before split")
+  print(cur_fft$thresholds)
   # Extract elements of definition (as vectors):
   classes    <- trimws(unlist(strsplit(cur_fft$classes,    split = fft_node_sep, fixed = TRUE)))
   cues       <- trimws(unlist(strsplit(cur_fft$cues,       split = fft_node_sep, fixed = TRUE)))
@@ -122,6 +124,12 @@ read_fft_df <- function(ffts_df, tree = 1){
   # Verify that the vector lengths (of tree definition parts) correspond to n_nodes:
   v_lengths <- sapply(list(classes, cues, directions, thresholds, exits), FUN = length)
 
+    print("The definitions of the thresholds")
+    print(thresholds)
+
+    print("The definitions of the nodes")
+    print(n_nodes)
+
   if (!all(v_lengths == n_nodes)) { # note error:
 
     # Determine vectors with lengths differing from n_nodes:
@@ -129,12 +137,6 @@ read_fft_df <- function(ffts_df, tree = 1){
     ixs_with_diffs <- v_lengths != n_nodes  # name indices
     tvec_diffs_col <- paste(req_tvec_names[ixs_with_diffs], collapse = ", ")
     vlen_diffs_col <- paste(v_lengths[ixs_with_diffs], collapse = ", ")
-
-    print("The definitions of the thresholds")
-    print(thresholds)
-
-    print("The definitions of the nodes")
-    print(n_nodes)
 
     # Error message:
     stop(paste0("The lengths of some FFT definition parts differ from n_nodes = ", n_nodes,

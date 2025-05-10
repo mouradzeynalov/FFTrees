@@ -377,7 +377,7 @@ fftrees_cuerank <- function(x = NULL,
         # Get thresholds that maximize current goal.threshold:
         best_result_index <- which(cue_i_stats[goal.threshold] == max(cue_i_stats[goal.threshold], na.rm = TRUE))
         # Note that cost_dec and cost are NEGATIVE in cue_i_stats (so that goal.threshold == "cost" is MINimized)!
-        print(best_result_index)
+        # print(best_result_index) #4Debugging
 
         # Handle 2 special cases:
         if (length(best_result_index) > 1) { # 1. multiple best indices:
@@ -403,7 +403,7 @@ fftrees_cuerank <- function(x = NULL,
         }
 
         cue_i_best <- cue_i_stats[best_result_index, ]  # get corresponding row of cue_i_stats
-        print(cue_i_best)
+        # print(cue_i_best) # 4Debugging
 
       } # Step 3.
 
@@ -451,8 +451,7 @@ fftrees_cuerank <- function(x = NULL,
   } # for (cue_i).
 
 
-  print("cue rankings after all cues")
-  print(cuerank_df)
+  # print(cuerank_df) # 4Debugging
 
   # Set rownames: ----
 
@@ -472,8 +471,7 @@ fftrees_cuerank <- function(x = NULL,
   # Store in x$cues$stats (as df): ----
 
   x$cues$stats[[data]] <- cuerank_df
-  print("cue stats")
-  print(x$cues$stats[[data]])
+  # print(x$cues$stats[[data]])
 
 
   # Progress bar:

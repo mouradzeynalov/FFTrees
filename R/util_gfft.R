@@ -2011,7 +2011,8 @@ all_fft_variants <- function(fft, quiet = FALSE){
   # 1. Get all_node_subsets(): ----
 
   set_1 <- all_node_subsets(fft = fft, quiet = quiet)
-  # print(set_1)  # 4debugging
+  print("Node subsets")
+  print(set_1)  # 4debugging
 
 
   # 2. Get all node orders (for each fft definition): ----
@@ -2021,7 +2022,8 @@ all_fft_variants <- function(fft, quiet = FALSE){
   for (i in 1:nrow(set_1)){ # for each fft definition in set_1:
 
     cur_fft <- read_fft_df(ffts_df = set_1, tree = i)
-    # print(cur_fft)  # 4debugging
+      print("Node orders")
+    print(cur_fft)  # 4debugging
 
     # Get all_node_orders() for cur_fft:
     cur_node_orders <- all_node_orders(fft = cur_fft, quiet = quiet)
@@ -2038,7 +2040,8 @@ all_fft_variants <- function(fft, quiet = FALSE){
   for (i in 1:nrow(set_2)){ # for each fft definition in set_2:
 
     cur_fft <- read_fft_df(ffts_df = set_2, tree = i)
-    # print(cur_fft)  # 4debugging
+    print("Exit structures")
+    print(cur_fft)  # 4debugging
 
     # Get all_() for cur_fft:
     cur_exit_structures <- all_exit_structures(fft = cur_fft, quiet = quiet)

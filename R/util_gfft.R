@@ -106,7 +106,7 @@ read_fft_df <- function(ffts_df, tree = 1){
   print(cur_fft)  # 4debugging
 
   # Key values:
-  # fft_node_sep <- ";"  # (local constant)
+  fft_node_sep <- ";"  # (local constant)
   n_nodes <- cur_fft$nodes
 
 

@@ -132,6 +132,7 @@ fftrees_cuerank <- function(x = NULL,
     cue_i_cost  <- x$params$cost.cues[[cue_i_name]]
 
     # Problem: cue_i_class can be c("matrix", "array")
+    print(cue_i_name)   # 4debugging: 1. before
     print(cue_i_class)   # 4debugging: 1. before
     #
     # if ("matrix" %in% cue_i_class){

@@ -60,6 +60,7 @@ predict.FFTrees <- function(object = NULL,
 
   # Verify inputs: ----
 
+  print("Got to the start of the function")
   testthat::expect_true(is.null(data), info = "data is deprecated in predict.FFTrees(). Use newdata instead")
   testthat::expect_true(!is.null(newdata))
 
@@ -90,8 +91,6 @@ predict.FFTrees <- function(object = NULL,
     mydata = "test",
     newdata = newdata
   )
-
-  cat("The apply in fftrees was successfull")
 
   # Calculate predictions from tree: ------
 
@@ -125,7 +124,6 @@ predict.FFTrees <- function(object = NULL,
   npv.lp.m <- (cr.m + 1) / (cr.m + mi.m + 2)
   ppv.lp.m <- (hi.m + 1) / (hi.m + fa.m + 2)
 
-  print("The levels function was successfull")
 
   # Loop over levels:
   for (level.i in 1:levels.n) {

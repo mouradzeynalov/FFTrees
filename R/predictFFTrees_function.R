@@ -75,7 +75,7 @@ predict.FFTrees <- function(object = NULL,
   if (!object$params$quiet$ini) {
 
     msg <- paste0("Generate predictions for tree ", tree, ":")
-    # cat(u_f_ini(msg, "\n"))
+    cat(u_f_ini(msg, "\n"))
 
     cli::cli_alert(msg, class = "alert-start")
   }
@@ -90,6 +90,8 @@ predict.FFTrees <- function(object = NULL,
     mydata = "test",
     newdata = newdata
   )
+
+  cat("The apply in fftrees was successfull")
 
   # Calculate predictions from tree: ------
 
@@ -122,6 +124,8 @@ predict.FFTrees <- function(object = NULL,
   # Laplace correction:
   npv.lp.m <- (cr.m + 1) / (cr.m + mi.m + 2)
   ppv.lp.m <- (hi.m + 1) / (hi.m + fa.m + 2)
+
+  print("The levels function was successfull")
 
   # Loop over levels:
   for (level.i in 1:levels.n) {
@@ -177,7 +181,7 @@ predict.FFTrees <- function(object = NULL,
   if (!object$params$quiet$fin) {
 
     msg <- paste0("Generated predictions for tree ", tree, ".")
-    # cat(u_f_fin(msg, "\n"))
+    cat(u_f_fin(msg, "\n"))
 
     cli::cli_alert_success(msg)
 

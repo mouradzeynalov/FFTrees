@@ -60,7 +60,6 @@ predict.FFTrees <- function(object = NULL,
 
   # Verify inputs: ----
 
-  print("Got to the start of the function")
   testthat::expect_true(is.null(data), info = "data is deprecated in predict.FFTrees(). Use newdata instead")
   testthat::expect_true(!is.null(newdata))
 

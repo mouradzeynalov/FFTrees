@@ -93,7 +93,7 @@ predict.FFTrees <- function(object = NULL,
 
   # Calculate predictions from tree: ------
 
-  predictions <- new.apply.tree$trees$decisions$test[[tree]]$decision
+  predictions <- new.apply.tree$trees$decisions$test[[tree]]
 
   # Get classification output: ----
 

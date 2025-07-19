@@ -95,6 +95,10 @@ fftrees_wordstofftrees <- function(x,
   #       Thus, enforcing that both exit types are mentioned (at least once) is too restrictive.
   # Done: Turn stops into warnings, but provide feedback which exit type is not being mentioned.
 
+  " sex = 1, predict True."
+  " age < 45, predict False."
+  " thal = {fd, normal}, predict True."
+  # "Otherwise, predict False."
 
   # Split my.tree into def parts (dropping the final "otherwise" clause): ------
   {

@@ -166,7 +166,7 @@ predict.FFTrees <- function(object = NULL,
 
   if (type == "both") {
     output <- tibble::as_tibble(data.frame(
-      class = class_output,
+      class_output,
       prob_0 = prob_output[, 1],
       prob_1 = prob_output[, 2]
     ))

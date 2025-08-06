@@ -132,6 +132,8 @@ read_fft_df <- function(ffts_df, tree = 1){
     # Determine vectors with lengths differing from n_nodes:
     req_tvec_names <- c("classes", "cues", "directions", "thresholds", "exits")  # [mostly plural]
     ixs_with_diffs <- v_lengths != n_nodes  # name indices
+    print("The cur_fft:")
+    print(cur_fft)
     print("The thresholds that differ:")
     print(thresholds[ixs_with_diffs])
     cat("differing idx: ", ixs_with_diffs, "\n")

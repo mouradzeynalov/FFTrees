@@ -104,6 +104,7 @@ read_fft_df <- function(ffts_df, tree = 1){
   # Get 1 line by tree ID (ffts_df may be unsorted):
   cur_fft <- ffts_df[(ffts_df$tree == tree), ]
   # print(cur_fft)  # 4debugging
+  print(tree)       # 4debugging
 
   # Key values:
   # fft_node_sep <- ";"  # (local constant)

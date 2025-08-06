@@ -883,7 +883,7 @@ fftrees_grow_fan <- function(x,
       print(cur_tree_df)  # 4debugging
 
       tree_definitions[tree_i, ] <- write_fft_df(fft = cur_tree_df, tree = tree_i)
-      print(tree_definitions[tree_i, ])  # 4debugging
+      # print(tree_definitions[tree_i, ])  # 4debugging
 
       # NEW code end. ----
 

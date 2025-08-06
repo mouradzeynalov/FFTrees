@@ -919,7 +919,7 @@ fftrees_grow_fan <- function(x,
     rownames(tree_definitions) <- 1:nrow(tree_definitions)  # assign rownames
     tree_definitions$tree      <- 1:nrow(tree_definitions)  # re-assign tree IDs
     tree_definitions <- tree_definitions[ , c(which(names(tree_definitions) == "tree"), which(names(tree_definitions) != "tree"))] # var "tree" first
-    print(tree_defintions)
+    print(tree_definitions)
 
   }
 

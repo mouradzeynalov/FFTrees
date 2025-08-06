@@ -120,7 +120,7 @@ read_fft_df <- function(ffts_df, tree = 1){
   exits      <- trimws(unlist(strsplit(cur_fft$exits,      split = fft_node_sep, fixed = TRUE)))
 
   print(tree)
-  # print(thresholds)
+  print(thresholds)
   print(length(thresholds))
   print(n_nodes)
 

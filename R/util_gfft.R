@@ -132,6 +132,9 @@ read_fft_df <- function(ffts_df, tree = 1){
     # Determine vectors with lengths differing from n_nodes:
     req_tvec_names <- c("classes", "cues", "directions", "thresholds", "exits")  # [mostly plural]
     ixs_with_diffs <- v_lengths != n_nodes  # name indices
+    print("The thresholds that differ:")
+    print(thresholds[ixs_with_diffs])
+    cat("differing idx: ", ixs_with_diffs, "\n")
     tvec_diffs_col <- paste(req_tvec_names[ixs_with_diffs], collapse = ", ")
     vlen_diffs_col <- paste(v_lengths[ixs_with_diffs], collapse = ", ")
 
@@ -229,8 +232,6 @@ write_fft_df <- function(fft, tree = -99L){
   # Key values:
   # fft_node_sep <- ";"  # (local constant)
   nodes_n <- nrow(fft)
-  cat("nrow for tree: ", tree, " is ", nodes_n, "\n")
-
 
   # Main: ----
 

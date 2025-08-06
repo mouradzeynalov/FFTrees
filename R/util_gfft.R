@@ -119,7 +119,10 @@ read_fft_df <- function(ffts_df, tree = 1){
   thresholds <- trimws(unlist(strsplit(cur_fft$thresholds, split = fft_node_sep, fixed = TRUE)))
   exits      <- trimws(unlist(strsplit(cur_fft$exits,      split = fft_node_sep, fixed = TRUE)))
 
+  print(tree)
   print(thresholds)
+  print(length(thresholds))
+  print(n_nodes)
 
   # Verify that the vector lengths (of tree definition parts) correspond to n_nodes:
   v_lengths <- sapply(list(classes, cues, directions, thresholds, exits), FUN = length)

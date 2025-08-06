@@ -404,7 +404,7 @@ fftrees_cuerank <- function(x = NULL,
         }
 
         cue_i_best <- cue_i_stats[best_result_index, ]  # get corresponding row of cue_i_stats
-        # print(cue_i_best) # 4Debugging
+        print(cue_i_best) # 4Debugging
 
       } # Step 3.
 

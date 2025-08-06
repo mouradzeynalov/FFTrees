@@ -134,9 +134,6 @@ read_fft_df <- function(ffts_df, tree = 1){
     ixs_with_diffs <- v_lengths != n_nodes  # name indices
     print("The cur_fft:")
     print(cur_fft)
-    # print("The thresholds that differ:")
-    # print(thresholds[ixs_with_diffs])
-    cat("differing idx: ", ixs_with_diffs, "\n")
     tvec_diffs_col <- paste(req_tvec_names[ixs_with_diffs], collapse = ", ")
     vlen_diffs_col <- paste(v_lengths[ixs_with_diffs], collapse = ", ")
 

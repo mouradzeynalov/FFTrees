@@ -880,7 +880,7 @@ fftrees_grow_fan <- function(x,
       # Select variables of cur_tree_df from level_stats_i:
       req_tree_vars <- c("class", "cue", "direction", "threshold", "exit")  # [all singular]
       cur_tree_df <- level_stats_i[ , req_tree_vars]
-      print(cur_tree_df)  # 4debugging
+      # print(cur_tree_df)  # 4debugging
 
       tree_definitions[tree_i, ] <- write_fft_df(fft = cur_tree_df, tree = tree_i)
       # print(tree_definitions[tree_i, ])  # 4debugging
@@ -919,7 +919,6 @@ fftrees_grow_fan <- function(x,
     rownames(tree_definitions) <- 1:nrow(tree_definitions)  # assign rownames
     tree_definitions$tree      <- 1:nrow(tree_definitions)  # re-assign tree IDs
     tree_definitions <- tree_definitions[ , c(which(names(tree_definitions) == "tree"), which(names(tree_definitions) != "tree"))] # var "tree" first
-    print(tree_definitions)
 
   }
 

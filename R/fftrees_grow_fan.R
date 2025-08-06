@@ -873,7 +873,7 @@ fftrees_grow_fan <- function(x,
 
       # Get level_stats_i (as df):
       level_stats_i <- level_stats_ls[[tree_i]]
-      # print(level_stats_i)  # 4debugging
+      print(level_stats_i)  # 4debugging
 
       # NEW code start: ----
 

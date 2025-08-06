@@ -304,7 +304,7 @@ fftrees_grow_fan <- function(x,
 
         # If there is a tie between cue performance, take the one with the least amount of threshold categories:
         if (length(cue_best_i) > 1) {
-          cli::cli_alert("Tie in cue performance between cues: {cue_best_df_current$cue[cue_best_i]}.")
+          # cli::cli_alert("Tie in cue performance between cues: {cue_best_df_current$cue[cue_best_i]}.")
           n_thres <- sapply(cue_best_i, function(i) {
              if (substr(cue_best_df_current$class[i], 1, 1) %in% c("f", "c", "l")) {
                  # Factor, rank by num thresholds

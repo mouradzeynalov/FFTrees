@@ -452,7 +452,7 @@ fftrees_cuerank <- function(x = NULL,
   } # for (cue_i).
 
 
-  # print(cuerank_df) # 4Debugging
+  print(cuerank_df) # 4Debugging
 
   # Set rownames: ----
 

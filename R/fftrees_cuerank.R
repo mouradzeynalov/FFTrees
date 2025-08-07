@@ -384,7 +384,7 @@ fftrees_cuerank <- function(x = NULL,
         if (length(best_result_index) > 1) { # 1. multiple best indices:
           # best_result_index <- best_result_index[1]  # take the 1st   ToDo: Is this the best way? Randomize?
           # TODO: Fix the code for this case
-          cat("Mulitple best thresholds for cue: ", cue_i_name, "\n")
+          # cat("Multiple best thresholds for cue: ", cue_i_name, "\n")
 
           # Calculate category counts
           if (substr(cue_i_class, 1, 1) %in% c("f", "c", "l")) {

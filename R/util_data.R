@@ -414,7 +414,7 @@ handle_NA_data <- function(data, criterion_name, mydata, quiet){
     # ToDo: What to do about NA values in criterion?
 
     crit_v <- data[ , ix_crit]
-    print(crit_v)  # 4debugging
+    # print(crit_v)  # 4debugging
 
     if (allow_NA_crit){ # Handle NA values in criterion:
 

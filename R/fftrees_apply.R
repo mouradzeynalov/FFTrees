@@ -170,6 +170,7 @@ fftrees_apply <- function(x,
 
   # Handle NA values: ------
 
+  browser()
   if ( allow_NA_pred | allow_NA_crit ){
 
     if (any(is.na(data))){ # IFF there are NA cases in data:
@@ -416,6 +417,7 @@ fftrees_apply <- function(x,
 
 
         # 2. If this IS the final / terminal node, then classify all NA cases according to fin_NA_pred:
+        browser()
         if (exit_i %in% exit_types[3]) {  # exit_types = .5:
 
           # NAs on current level (based on current_decision):

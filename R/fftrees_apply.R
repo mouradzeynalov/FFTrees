@@ -38,6 +38,7 @@
 
 fftrees_apply <- function(x,
                           mydata = NULL,   # data type (either "train" or "test")
+                          traindata = NULL,
                           newdata = NULL,
                           #
                           fin_NA_pred = "majority"  # Options available: c("noise", "signal", "majority", "baseline")
@@ -181,10 +182,14 @@ fftrees_apply <- function(x,
         criterion_name <- x$criterion_name
 
         # Compute criterion baseline/base rate (for "train" data ONLY):
+        if (!is.null(x$data$train)) {
+            traindata <- x$data$train
+        }
+
         if (allow_NA_crit){
-          crit_br <- mean(x$data[["train"]][[criterion_name]], na.rm = TRUE)
+          crit_br <- mean(traindata[[criterion_name]], na.rm = TRUE)
         } else { # default:
-          crit_br <- mean(x$data[["train"]][[criterion_name]])  # (from logical, i.e., proportion of TRUE values)
+          crit_br <- mean(traindata[[criterion_name]])  # (from logical, i.e., proportion of TRUE values)
         }
 
         crit_br <- round(crit_br, 3)  # rounding

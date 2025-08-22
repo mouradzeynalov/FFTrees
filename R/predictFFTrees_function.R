@@ -85,6 +85,7 @@ predict.FFTrees <- function(object = NULL,
 
   goal <- object$params$goal
 
+  browser()
   new.apply.tree <- fftrees_apply(
     x = object,
     mydata = "test",

@@ -123,6 +123,7 @@ read_fft_df <- function(ffts_df, tree = 1){
   # print(thresholds)
   # print(length(thresholds))
   # print(n_nodes)
+  browser()
 
   # Verify that the vector lengths (of tree definition parts) correspond to n_nodes:
   v_lengths <- sapply(list(classes, cues, directions, thresholds, exits), FUN = length)

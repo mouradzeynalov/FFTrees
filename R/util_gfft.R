@@ -139,6 +139,7 @@ read_fft_df <- function(ffts_df, tree = 1){
     vlen_diffs_col <- paste(v_lengths[ixs_with_diffs], collapse = ", ")
 
     # Error message:
+    browser()
     stop(paste0("The lengths of some FFT definition parts differ from n_nodes = ", n_nodes,
                 ":\n  names of v = (", tvec_diffs_col, "), v_lengths = (", vlen_diffs_col, ")."))
 

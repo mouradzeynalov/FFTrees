@@ -359,6 +359,7 @@ FFTrees <- function(formula = NULL,
 
     # ToDo: Verify integrity of tree definitions:
     # 1. tree.definitions contains valid tree definitions (in appropriate format):
+    browser()
     testthat::expect_true(verify_ffts_df(tree.definitions))
 
     # 2. tree.definitions fit to provided data (see verify_all_cues_in_data() in helper.R)
@@ -411,6 +412,7 @@ FFTrees <- function(formula = NULL,
 
   # 1. Create a new FFTrees object x: ----
 
+  browser()
   x <- fftrees_create(formula = formula,
                       data = data,
                       data.test = data.test,

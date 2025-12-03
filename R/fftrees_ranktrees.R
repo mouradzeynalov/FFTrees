@@ -20,8 +20,10 @@ fftrees_ranktrees <- function(x,
 
   # Verify inputs: ----
 
-  testthat::expect_s3_class(x, class = "FFTrees")
-  testthat::expect_true(data %in% c("train", "test"))
+  if (class(x) != "FFTrees") stop("x is not class(FFTrees)")
+  # testthat::expect_s3_class(x, class = "FFTrees")
+  if (!(data %in% c("train", "test"))) stop("data not in c(\"train\", \"test\")")
+  # testthat::expect_true(data %in% c("train", "test"))
 
 
   # Initialize: ----

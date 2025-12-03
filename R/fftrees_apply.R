@@ -31,7 +31,6 @@
 #' @seealso
 #' \code{\link{FFTrees}} for creating FFTs from and applying them to data.
 #'
-#' @importFrom testthat expect_true
 #' @importFrom tibble as_tibble tibble
 #'
 #' @export
@@ -48,8 +47,10 @@ fftrees_apply <- function(x,
 
   # Verify inputs: ----
 
-  testthat::expect_s3_class(x, class = "FFTrees")
-  testthat::expect_true(mydata %in% c("train", "test"))
+  if (class(x) != "FFTrees") stop("x is not class(FFTrees)")
+  # testthat::expect_s3_class(x, class = "FFTrees")
+  if (!(mydata %in% c("train", "test"))) stop("mydata not in c(\"train\", \"test\")")
+  # testthat::expect_true(mydata %in% c("train", "test"))
 
 
   # Provide user feedback: ----
@@ -74,7 +75,8 @@ fftrees_apply <- function(x,
 
     if (is.null(newdata)) {
 
-      testthat::expect_true(!is.null(x$data$test))
+        if (is.null(x$data$test)) stop("x$data$test is null")
+      # testthat::expect_true(!is.null(x$data$test))
 
     } else {
 

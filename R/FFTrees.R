@@ -412,8 +412,6 @@ FFTrees <- function(formula = NULL,
   # Main: ------
 
   # 1. Create a new FFTrees object x: ----
-
-  browser()
   x <- fftrees_create(formula = formula,
                       data = data,
                       data.test = data.test,

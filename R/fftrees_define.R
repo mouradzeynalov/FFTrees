@@ -38,7 +38,6 @@
 #' \code{\link{fftrees_wordstofftrees}} for creating FFTs from verbal descriptions;
 #' \code{\link{FFTrees}} for creating FFTs from and applying them to data.
 #'
-#' @import testthat
 #'
 #' @export
 
@@ -60,7 +59,8 @@ fftrees_define <- function(x,
 
   # Verify inputs: ------
 
-  testthat::expect_s3_class(x, class = "FFTrees")
+  if (class(x) != "FFTrees") stop("object x is not class [FFTrees]")
+  # testthat::expect_s3_class(x, class = "FFTrees")
 
 
   # Main: Distinguish between 4 use cases ------
@@ -108,7 +108,8 @@ fftrees_define <- function(x,
   } else if (!is.null(object)) { # 2. Use FFTs from object: ----
 
     # Verify object$trees$definitions:
-    testthat::expect_true(!is.null(object$trees$definitions))
+    if (is.null(object$trees$definitions)) stop("is.null(object$trees$definitions)")
+    # testthat::expect_true(!is.null(object$trees$definitions))
 
     # Change x by using the tree definitions of object:
     x$trees$definitions <- object$trees$definitions

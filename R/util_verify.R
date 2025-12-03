@@ -23,31 +23,30 @@
 verify_data_and_criterion <- function(data, criterion_name, mydata){
 
   # Verify data types:
-  testthat::expect_true(is.data.frame(data),
-                        info = paste0("The ", mydata, " data is not a data.frame"))
-  testthat::expect_true(is.character(criterion_name),
-                        info = paste0("The criterion_name is not of type character"))
+  if (!is.data.frame(data)) stop(paste0("The ", mydata, " data is not a data.frame"))
+  # testthat::expect_true(is.data.frame(data), info = paste0("The ", mydata, " data is not a data.frame"))
+  if (!is.character(criterion_name)) stop("The criterion_name is not of type character")
+  # testthat::expect_true(is.character(criterion_name), info = paste0("The criterion_name is not of type character"))
 
   # Verify that criterion occurs in data:
-  testthat::expect_true(criterion_name %in% names(data),
-                        info = paste0("The criterion name '", criterion_name, "' does not occur in ", mydata, " data"))
+  if(!(criterion_name %in% names(data))) stop(paste0("The criterion name '", criterion_name, "' does not occur in ", mydata, " data"))
+  # testthat::expect_true(criterion_name %in% names(data), info = paste0("The criterion name '", criterion_name, "' does not occur in ", mydata, " data"))
 
   # Verify the number of criterion values:
   if (!allow_NA_crit){ # default:
 
     # Verify that criterion does NOT contain NA values:
-    testthat::expect_true(all(!is.na(data[[criterion_name]])),
-                          info = "At least one of the criterion values are missing. Please remove NA values and try again")
+    if(!all(!is.na(data[[criterion_name]]))) stop("At least one of the criterion values are missing. Please remove NA values and try again")
+    # testthat::expect_true(all(!is.na(data[[criterion_name]])), info = "At least one of the criterion values are missing. Please remove NA values and try again")
 
     # Verify that criterion is binary:
-    testthat::expect_equal(length(unique(data[[criterion_name]])),
-                           expected = 2,
-                           info = "The criterion variable is non-binary")
+    if (length(unique(data[[criterion_name]])) != 2) stop("The criterion variable is non-binary")
+    # testthat::expect_equal(length(unique(data[[criterion_name]])), expected = 2, info = "The criterion variable is non-binary")
 
   } else { # allow_NA_crit: the criterion must maximally contain 3 distinct values:
 
-    testthat::expect_lt(length(unique(data[[criterion_name]])),
-                        expected = 4)#,
+    if (length(unique(data[[criterion_name]])) != 4) stop("length(unique(data[[criterion_name]])), expected = 4")
+    # testthat::expect_lt(length(unique(data[[criterion_name]])), expected = 4)#,
     # info = "The criterion variable must only contain binary values, plus optional NA values")
 
   }
@@ -245,9 +244,12 @@ verify_all_cues_in_data <- function(cues, data){
 
   # Verify inputs: ----
 
-  testthat::expect_true(length(cues) > 0)
-  testthat::expect_true(is.character(cues), info = "Provided 'cues' are not names (of type 'character')")
-  testthat::expect_true(is.data.frame(data), info = "Provided 'data' are not a data.frame")
+  if (!(length(cues) > 0)) stop("!length(cues) > 0")
+  # testthat::expect_true(length(cues) > 0)
+  if (!is.character(cues)) stop("Provided 'cues' are not names (of type 'character')")
+  # testthat::expect_true(is.character(cues), info = "Provided 'cues' are not names (of type 'character')")
+  if(!is.data.frame(data)) stop("Provided 'data' are not a data.frame")
+  # testthat::expect_true(is.data.frame(data), info = "Provided 'data' are not a data.frame")
 
   # Initialize: ----
 
@@ -373,7 +375,8 @@ verify_tree_arg <- function(x, data, tree){
 verify_ffts_df <- function(ffts_df){
 
   # verify ffts_df:
-  testthat::expect_true(is.data.frame(ffts_df), info = "Input 'ffts_df' are not a data.frame")
+  if(!is.data.frame(ffts_df)) stop("Input 'ffts_df' are not a data.frame")
+  # testthat::expect_true(is.data.frame(ffts_df), info = "Input 'ffts_df' are not a data.frame")
 
   # verify nrow(ffts_df) > 0:
   if (nrow(ffts_df) < 1){
@@ -402,7 +405,8 @@ verify_ffts_df <- function(ffts_df){
 
       directions <- trimws(unlist(strsplit(x, split = fft_node_sep, fixed = TRUE)))
       # print(directions)  # 4debugging
-      testthat::expect_true(verify_dir_sym(directions))
+      if (!verify_dir_sym(directions)) stop("verify_dir_sym(directions)")
+      # testthat::expect_true(verify_dir_sym(directions))
 
     })
 
@@ -420,7 +424,8 @@ verify_ffts_df <- function(ffts_df){
 
       exits <- trimws(unlist(strsplit(x, split = fft_node_sep, fixed = TRUE)))
       # print(exits)  # 4debugging
-      testthat::expect_true(verify_exit_type(exits))
+      if (!verify_exit_type(exits)) stop("verify_exit_type(exits)")
+      # testthat::expect_true(verify_exit_type(exits))
 
     })
 
@@ -458,7 +463,8 @@ verify_ffts_df <- function(ffts_df){
 verify_fft_as_df <- function(fft_df){
 
   # verify fft_df:
-  testthat::expect_true(is.data.frame(fft_df), info = "Input 'fft_df' is not a data.frame")
+  if(!is.data.frame(fft_df)) stop("Input 'fft_df' is not a data.frame")
+  # testthat::expect_true(is.data.frame(fft_df), info = "Input 'fft_df' is not a data.frame")
 
   # verify nrow(fft_df) > 0:
   if (nrow(fft_df) < 1){
@@ -479,9 +485,11 @@ verify_fft_as_df <- function(fft_df){
     # Verify variables further (e.g., verify their contents):
     # ToDo: verify class (requires data)
     # ToDo: verify cue (requires data)
-    testthat::expect_true(verify_dir_sym(fft_df$direction))
+    if (!verify_dir_sym(fft_df$direction)) stop("verify_dir_sym(fft_df$direction)")
+    # testthat::expect_true(verify_dir_sym(fft_df$direction))
     # ToDo: verify threshold
-    testthat::expect_true(verify_exit_type(fft_df$exit))
+    if (!verify_exit_type(fft_df$exit)) stop("verify_exit_type(fft_df$exit)")
+    # testthat::expect_true(verify_exit_type(fft_df$exit))
 
     return(TRUE)
 

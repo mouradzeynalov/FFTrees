@@ -89,10 +89,13 @@ read_fft_df <- function(ffts_df, tree = 1){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_ffts_df(ffts_df)) # verify structure and content
+  if (!verify_ffts_df(ffts_df)) stop("verify_ffts_df(ffts_df)")
+  # testthat::expect_true(verify_ffts_df(ffts_df)) # verify structure and content
 
-  testthat::expect_true(is.numeric(tree))
-  testthat::expect_true(length(tree) == 1)
+  if (!is.numeric(tree)) stop("!is.numeric(tree)")
+  # testthat::expect_true(is.numeric(tree))
+  if (length(tree) != 1) stop("length(tree) != 1")
+  # testthat::expect_true(length(tree) == 1)
 
   if (!(tree %in% ffts_df$tree)){
     # Error message:
@@ -222,10 +225,13 @@ write_fft_df <- function(fft, tree = -99L){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft)) # verify structure and content
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft)) # verify structure and content
 
-  testthat::expect_true(is.numeric(tree))
-  testthat::expect_true(length(tree) == 1)
+    if (!is.numeric(tree)) stop("is.numeric(tree)")
+  # testthat::expect_true(is.numeric(tree))
+    if (length(tree) != 1) stop("length(tree) != 1")
+  # testthat::expect_true(length(tree) == 1)
 
 
   # Key values:
@@ -504,10 +510,12 @@ add_nodes <- function(fft,
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   if (!all(is.na(direction))){
-    testthat::expect_true(verify_dir_sym(direction))
+      if (!verify_dir_sym(direction)) stop("verify_dir_sym(direction)")
+    # testthat::expect_true(verify_dir_sym(direction))
   }
 
   if (all(is.na(nodes))) { # catch case 0:
@@ -522,7 +530,8 @@ add_nodes <- function(fft,
   }
 
   nodes <- as.integer(nodes)
-  testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
+  if(!is.integer(nodes)) stop("nodes must be an integer vector")
+  # testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
 
   # Do all args have same length:
   key_args <- list(nodes, class, cue, direction, threshold, exit)  # my.node
@@ -662,7 +671,8 @@ add_nodes <- function(fft,
   # row.names(fft_mod) <- 1:nrow(fft_mod)
 
   # Verify output:
-  testthat::expect_true(verify_fft_as_df(fft_mod))
+    if (!verify_fft_as_df(fft_mod)) stop("verify_fft_as_df(fft_mod)")
+  # testthat::expect_true(verify_fft_as_df(fft_mod))
 
   return(fft_mod)
 
@@ -769,7 +779,8 @@ drop_nodes <- function(fft, nodes = NA, quiet = FALSE){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   if (all(is.na(nodes))) { # catch case 0:
 
@@ -783,7 +794,8 @@ drop_nodes <- function(fft, nodes = NA, quiet = FALSE){
   }
 
   nodes <- as.integer(nodes)
-  testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
+  if(!is.integer(nodes)) stop("nodes must be an integer vector")
+  # testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
 
   n_cues <- nrow(fft)
 
@@ -862,7 +874,8 @@ drop_nodes <- function(fft, nodes = NA, quiet = FALSE){
   row.names(fft_mod) <- 1:nrow(fft_mod)
 
   # Verify output:
-  testthat::expect_true(verify_fft_as_df(fft_mod))
+    if (!verify_fft_as_df(fft_mod)) stop("verify_fft_as_df(fft_mod)")
+  # testthat::expect_true(verify_fft_as_df(fft_mod))
 
   return(fft_mod)
 
@@ -958,7 +971,8 @@ select_nodes <- function(fft, nodes = NA, quiet = FALSE){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   if (all(is.na(nodes))) { # catch case 0:
 
@@ -971,7 +985,8 @@ select_nodes <- function(fft, nodes = NA, quiet = FALSE){
 
 
   nodes <- as.integer(nodes)
-  testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
+  if(!is.integer(nodes)) stop("nodes must be an integer vector")
+  # testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
 
   n_cues <- nrow(fft)
 
@@ -1068,7 +1083,8 @@ select_nodes <- function(fft, nodes = NA, quiet = FALSE){
   row.names(fft_mod) <- 1:nrow(fft_mod)
 
   # Verify output:
-  testthat::expect_true(verify_fft_as_df(fft_mod))
+    if (!verify_fft_as_df(fft_mod)) stop("verify_fft_as_df(fft_mod)")
+  # testthat::expect_true(verify_fft_as_df(fft_mod))
 
   return(fft_mod)
 
@@ -1190,7 +1206,8 @@ edit_nodes <- function(fft,
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   if (all(is.na(nodes))) { # catch case 0:
 
@@ -1204,7 +1221,8 @@ edit_nodes <- function(fft,
   }
 
   nodes <- as.integer(nodes)
-  testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
+  if (!is.integer(nodes)) stop("nodes must be an integer vector")
+  # testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
 
   # Do all args have same length:
   key_args <- list(nodes, class, cue, direction, threshold, exit) # my.node
@@ -1356,7 +1374,8 @@ edit_nodes <- function(fft,
   # row.names(fft_mod) <- 1:nrow(fft_mod)
 
   # Verify output:
-  testthat::expect_true(verify_fft_as_df(fft_mod))
+    if (!verify_fft_as_df(fft_mod)) stop("verify_fft_as_df(fft_mod)")
+  # testthat::expect_true(verify_fft_as_df(fft_mod))
 
   return(fft_mod)
 
@@ -1451,7 +1470,8 @@ flip_exits <- function(fft, nodes = NA, quiet = FALSE){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   if (all(is.na(nodes))) { # catch case 0:
 
@@ -1465,7 +1485,8 @@ flip_exits <- function(fft, nodes = NA, quiet = FALSE){
   }
 
   nodes <- as.integer(nodes)
-  testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
+  if (!is.integer(nodes)) stop("nodes must be an integer vector")
+  # testthat::expect_true(is.integer(nodes), info = "nodes must be an integer vector")
 
   n_cues <- nrow(fft)
 
@@ -1530,7 +1551,8 @@ flip_exits <- function(fft, nodes = NA, quiet = FALSE){
   # Output: ----
 
   # Verify output:
-  testthat::expect_true(verify_fft_as_df(fft_mod))
+    if (!verify_fft_as_df(fft_mod)) stop("verify_fft_as_df(fft_mod)")
+  # testthat::expect_true(verify_fft_as_df(fft_mod))
 
   return(fft_mod)
 
@@ -1622,18 +1644,20 @@ reorder_nodes <- function(fft, order = NA, quiet = FALSE){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft)) # verify structure and content
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft)) # verify structure and content
   n_cues <- nrow(fft)
 
   if (all(is.na(order))){
     order <- 1:n_cues  # default: no change
   }
 
-  testthat::expect_true(is.numeric(order))
-  testthat::expect_true(n_cues == length(order),
-                        info = paste0("FFT has ", n_cues, " cues, but order has length ", length(order)))
-  testthat::expect_true(all.equal(sort(order), 1:n_cues),
-                        info = paste0("order must be a permutation of the cues in fft"))
+    if (!is.numeric(order)) stop("is.numeric(order)")
+  # testthat::expect_true(is.numeric(order))
+  if(n_cues != length(order)) stop(paste0("FFT has ", n_cues, " cues, but order has length ", length(order)))
+  # testthat::expect_true(n_cues == length(order), info = paste0("FFT has ", n_cues, " cues, but order has length ", length(order)))
+  if(!all.equal(sort(order))) stop("order must be a permutation of the cues in fft")
+  # testthat::expect_true(all.equal(sort(order), 1:n_cues), info = paste0("order must be a permutation of the cues in fft"))
 
 
   if (all(order == 1:n_cues)) { # catch case:
@@ -1692,7 +1716,8 @@ reorder_nodes <- function(fft, order = NA, quiet = FALSE){
   row.names(fft_mod) <- 1:nrow(fft_mod)
 
   # Verify output:
-  testthat::expect_true(verify_fft_as_df(fft_mod))
+    if (!verify_fft_as_df(fft_mod)) stop("verify_fft_as_df(fft_mod)")
+  # testthat::expect_true(verify_fft_as_df(fft_mod))
 
   return(fft_mod)
 
@@ -1761,7 +1786,8 @@ all_node_orders <- function(fft, quiet = FALSE){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   # Initialize:
   out <- NULL
@@ -1842,7 +1868,8 @@ all_exit_structures <- function(fft, quiet = FALSE){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   # Initialize:
   out <- NULL
@@ -1921,7 +1948,8 @@ all_node_subsets <- function(fft, quiet = FALSE){
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   # Initialize:
   out <- NULL
@@ -1997,7 +2025,8 @@ all_fft_variants <- function(fft, quiet = FALSE){
   # Prepare: ------
 
   # Verify inputs:
-  testthat::expect_true(verify_fft_as_df(fft))
+    if (!verify_fft_as_df(fft)) stop("verify_fft_as_df(fft)")
+  # testthat::expect_true(verify_fft_as_df(fft))
 
   # Initialize:
   out <- NULL

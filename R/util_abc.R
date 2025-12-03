@@ -18,8 +18,10 @@ apply_break <- function(direction,
                         cue.v,
                         cue.class) {
 
-  testthat::expect_true(direction %in% c("!=", "=", "<", "<=", ">", ">="))
-  testthat::expect_length(threshold.val, 1)
+  if (!(direction %in% c("!=", "=", "<", "<=", ">", ">="))) stop("direction not %in% c(!=, =, <, <=, >, >=)")
+  # testthat::expect_true(direction %in% c("!=", "=", "<", "<=", ">", ">="))
+  if (length(threshold.val) != 1) stop("length(threshold.val) != 1")
+  # testthat::expect_length(threshold.val, 1)
 
   # direction = cue_direction_new
   # threshold.val = cue_threshold_new
@@ -232,12 +234,13 @@ get_best_tree <- function(x,
 
   # x: ----
 
-  testthat::expect_true(inherits(x, "FFTrees"),
-                        info = "Argument x is no FFTrees object")
+  if(!inherits(x, "FFTrees")) stop("Argument x is not FFTrees object")
+  # testthat::expect_true(inherits(x, "FFTrees"), info = "Argument x is no FFTrees object")
 
   # data: ----
 
-  testthat::expect_true(data %in% c("train", "test"))
+  if (!(data %in% c("train", "test"))) stop("data not in c(train, test)")
+  # testthat::expect_true(data %in% c("train", "test"))
 
   if (is.null(x$trees$stats$test) & (data == "test")){
     message("You asked for 'test' data, but x only contains training statistics. I'll use data = 'train' instead...")
@@ -292,7 +295,8 @@ get_best_tree <- function(x,
   }
 
   valid_tree_select_goal <- c(max_goals, min_goals)
-  testthat::expect_true(goal %in% valid_tree_select_goal)
+  if (!(goal %in% valid_tree_select_goal)) stop("goal %in% valid_tree_select_goal")
+  # testthat::expect_true(goal %in% valid_tree_select_goal)
 
 
   # Get tree stats (from x given data): ------
@@ -320,7 +324,8 @@ get_best_tree <- function(x,
   # print(paste0("Select best tree = ", tree))  # 4debugging
 
   tree <- as.integer(tree)  # aim to convert to integer
-  testthat::expect_true(is.integer(tree))  # verify integer
+  if (!is.integer(tree)) stop("!is.integer(tree)")
+  # testthat::expect_true(is.integer(tree))  # verify integer
 
   return(tree) # as integer
 
@@ -477,7 +482,8 @@ get_exit_word <- function(data){
 get_fft_df <- function(x){
 
   # verify input:
-  testthat::expect_s3_class(x, class = "FFTrees")
+  if (class(x) != "FFTrees") stop("class of x is not [FFTrees]")
+  # testthat::expect_s3_class(x, class = "FFTrees")
 
   # main: get definitions from object:
   x_tree_df <- x$trees$definitions  # definitions (as df/tibble)
@@ -504,8 +510,10 @@ get_fft_df <- function(x){
 get_lhs_formula <- function(formula){
 
   # Verify formula:
-  testthat::expect_true(!is.null(formula), info = "formula is NULL")
-  testthat::expect_type(formula, type = "language")
+  if(is.null(formula)) stop("formula is NULL")
+  # testthat::expect_true(!is.null(formula), info = "formula is NULL")
+  if (typeof(formula) != "language") stop("formula is not of type [language]")
+  # testthat::expect_type(formula, type = "language")
 
   # Main:
   lhs_name <- paste(formula)[2]

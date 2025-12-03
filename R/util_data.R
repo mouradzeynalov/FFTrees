@@ -30,10 +30,14 @@ clean_data <- function(data, criterion_name, formula,
 
   # Verify inputs: ----
 
-  testthat::expect_true(is.data.frame(data))
-  testthat::expect_true(is.character(criterion_name))
-  testthat::expect_true(is.character(mydata))
-  testthat::expect_true(is.list(quiet))
+    if (!is.data.frame(data)) stop("!is.data.frame(data)")
+  # testthat::expect_true(is.data.frame(data))
+    if (!is.character(criterion_name)) stop("!is.character(criterion_name)")
+  # testthat::expect_true(is.character(criterion_name))
+    if (!is.character(mydata)) stop("!is.character(mydata)")
+  # testthat::expect_true(is.character(mydata))
+    if (!is.list(quiet)) stop("!is.list(quiet)")
+  # testthat::expect_true(is.list(quiet))
 
 
   # Main: ------
@@ -143,10 +147,14 @@ describe_data <- function(data, data_name, criterion_name, baseline_value) {
   # Prepare: ----
 
   # Verify inputs:
-  testthat::expect_true(is.data.frame(data))
-  testthat::expect_true(is.character(criterion_name))
-  testthat::expect_true(criterion_name %in% names(data))
-  testthat::expect_true(baseline_value %in% data[[criterion_name]])
+  if (!is.data.frame(data)) stop("!is.data.frame(data)")
+  # testthat::expect_true(is.data.frame(data))
+  if (!is.character(criterion_name)) stop("!is.character(criterion_name)")
+  # testthat::expect_true(is.character(criterion_name))
+  if (!(criterion_name %in% names(data))) stop("!criterion_name %in% names(data)")
+  # testthat::expect_true(criterion_name %in% names(data))
+  if (!(baseline_value %in% data[[criterion_name]])) stop("!baseline_value %in% data[[criterion_name]]")
+  # testthat::expect_true(baseline_value %in% data[[criterion_name]])
 
 
   # Main: ----
@@ -212,11 +220,14 @@ handle_NA_data <- function(data, criterion_name, mydata, quiet){
 
   # Verify inputs: ----
 
-  testthat::expect_true(is.data.frame(data))
-  testthat::expect_true(is.character(criterion_name))
-  testthat::expect_true(is.character(mydata))
-  testthat::expect_true(is.list(quiet))
-
+  if (!is.data.frame(data)) stop("!is.data.frame(data)")
+  # testthat::expect_true(is.data.frame(data))
+  if (!is.character(criterion_name)) stop("!is.character(criterion_name)")
+  # testthat::expect_true(is.character(criterion_name))
+  if (!is.character(mydata)) stop("!is.character(mydata)")
+  # testthat::expect_true(is.character(mydata))
+  if (!is.list(quiet)) stop("!is.list(quiet)")
+  # testthat::expect_true(is.list(quiet))
 
   # Identify columns/variables with NA values (by roles & data types): ----
 

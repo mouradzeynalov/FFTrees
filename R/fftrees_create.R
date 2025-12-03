@@ -54,7 +54,6 @@
 #' \code{\link{fftrees_define}} for defining FFTs;
 #' \code{\link{FFTrees}} for creating FFTs from and applying them to data.
 #'
-#' @import testthat
 #' @importFrom magrittr "%>%"
 #' @importFrom tibble as_tibble
 #'
@@ -110,8 +109,10 @@ fftrees_create <- function(formula = NULL,
 
   # data: ----
 
-  testthat::expect_true(!is.null(data), info = "data is NULL")
-  testthat::expect_true(is.data.frame(data), info = "data is not a dataframe")
+  if (is.null(data)) stop("data is NULL")
+  # testthat::expect_true(!is.null(data), info = "data is NULL")
+  if (!is.data.frame(data)) stop("data is not a dataframe")
+  # testthat::expect_true(is.data.frame(data), info = "data is not a dataframe")
 
 
   # formula: ----
@@ -126,15 +127,19 @@ fftrees_create <- function(formula = NULL,
 
   # algorithm: ----
 
-  testthat::expect_true(!is.null(algorithm), info = "algorithm is NULL")
-  testthat::expect_true(algorithm %in% algorithm_options)  # use global constant
+  if(is.null(algorithm)) stop("algorithm is NULL")
+  # testthat::expect_true(!is.null(algorithm), info = "algorithm is NULL")
+  if(!(algorithm %in% algorithm_options)) stop("algorithm not in options")
+  # testthat::expect_true(algorithm %in% algorithm_options)  # use global constant
 
 
   # sens.w: ----
 
-  testthat::expect_true(!is.null(sens.w), info = "sens.w is NULL")
-  testthat::expect_lte(sens.w, expected = 1)
-  testthat::expect_gte(sens.w, expected = 0)
+  if(is.null(sens.w)) stop("sens.w is NULL")
+  # testthat::expect_true(!is.null(sens.w), info = "sens.w is NULL")
+  if (!(sens.w >= 0 && sens.w <= 1)) stop("!(sens.w >= 0 && sens.w <= 1)")
+  # testthat::expect_lte(sens.w, expected = 1)
+  # testthat::expect_gte(sens.w, expected = 0)
 
 
   # goal: ----
@@ -193,8 +198,10 @@ fftrees_create <- function(formula = NULL,
   } # if (is.null(goal)) else.
 
   # Verify goal:
-  testthat::expect_true(!is.null(goal), info = "goal is NULL")
-  testthat::expect_true(goal %in% valid_goal)
+  if(is.null(goal)) stop("goal is NULL")
+  # testthat::expect_true(!is.null(goal), info = "goal is NULL")
+  if(!(goal %in% valid_goal)) stop("Goal not in valid goals")
+  # testthat::expect_true(goal %in% valid_goal)
 
   if ((goal == "wacc") & (!enable_wacc(sens.w))){ # correct to "bacc":
 
@@ -257,8 +264,10 @@ fftrees_create <- function(formula = NULL,
 
   # Verify goal.chase:
 
-  testthat::expect_true(!is.null(goal.chase), info = "goal.chase is NULL")
-  testthat::expect_true(goal.chase %in% valid_goal)
+  if(is.null(goal.chase)) stop("goal.chase is NULL")
+  # testthat::expect_true(!is.null(goal.chase), info = "goal.chase is NULL")
+  if(!(goal.chase %in% valid_goal)) stop("Goal chase not in valid goals")
+  # testthat::expect_true(goal.chase %in% valid_goal)
 
   if ((goal.chase == "wacc") & (!enable_wacc(sens.w))){ # correct to "bacc":
 
@@ -340,8 +349,10 @@ fftrees_create <- function(formula = NULL,
 
   # Verify goal.threshold:
 
-  testthat::expect_true(!is.null(goal.threshold), info = "goal.threshold is NULL")
-  testthat::expect_true(goal.threshold %in% valid_goal)
+  if(is.null(goal.threshold)) stop("goal.threshold is NULL")
+  # testthat::expect_true(!is.null(goal.threshold), info = "goal.threshold is NULL")
+  if (!(goal.threshold %in% valid_goal)) stop("!(goal.threshold %in% valid_goal)")
+  # testthat::expect_true(goal.threshold %in% valid_goal)
 
   if ((goal.threshold == "wacc") & (!enable_wacc(sens.w))){ # correct to "bacc":
 
@@ -378,9 +389,12 @@ fftrees_create <- function(formula = NULL,
 
   if (!is.null(my.goal)){
 
-    testthat::expect_true(is.character(my.goal), info = "Provided 'my.goal' is not of type 'character'")
-    testthat::expect_true(length(my.goal) == 1,  info = "Provided 'my.goal' is not of length 1")
-    testthat::expect_true(is.function(my.goal.fun),  info = "Provided 'my.goal.fun' is not of type 'function'")
+    if(!is.character(my.goal)) stop("Provided 'my.goal' is not of type 'character'")
+    # testthat::expect_true(is.character(my.goal), info = "Provided 'my.goal' is not of type 'character'")
+    if(length(my.goal) != 1) stop("Provided 'my.goal' is not of length 1")
+    # testthat::expect_true(length(my.goal) == 1,  info = "Provided 'my.goal' is not of length 1")
+    if(!is.function(my.goal.fun)) stop("Provided 'my.goal.fun' is not of type 'function'")
+    # testthat::expect_true(is.function(my.goal.fun),  info = "Provided 'my.goal.fun' is not of type 'function'")
 
     # my.goal.fun must only use 4 freq arguments:
     my_goal_arg_valid <- c("hi", "fa", "mi", "cr")
@@ -432,24 +446,16 @@ fftrees_create <- function(formula = NULL,
 
   numthresh.method_valid <- c("optimise", "median")
 
-  testthat::expect_true(substr(numthresh.method, 1, 1) %in% substr(numthresh.method_valid, 1, 1),
-                        info = paste0(
-                          "numthresh.method is not valid\nTry one of the following: ",
-                          paste(numthresh.method_valid, collapse = ", ")
-                        )
-  )
+  if(!substr(numthresh.method) stop("numthresh.method is not valid\nTry one of the following: ", paste(numthresh.method_valid, collapse = ", ")))
+  # testthat::expect_true(substr(numthresh.method, 1, 1) %in% substr(numthresh.method_valid, 1, 1), info = paste0( "numthresh.method is not valid\nTry one of the following: ", paste(numthresh.method_valid, collapse = ", ")))
 
 
   # numthresh.n: ----
 
   numthresh.n_valid <- c(3:20)
 
-  testthat::expect_true(numthresh.n %in% numthresh.n_valid,
-                        info = paste0(
-                          "numthresh.n is not valid\nTry one of the following: ",
-                          paste(numthresh.n_valid, collapse = ", ")
-                        )
-  )
+  if(!(numthresh.n %in% numthresh.n_valid)) stop("numthresh.n is not valid\nTry one of the following: ", paste(numthresh.n_valid, collapse = ", "))
+  # testthat::expect_true(numthresh.n %in% numthresh.n_valid, info = paste0( "numthresh.n is not valid\nTry one of the following: ", paste(numthresh.n_valid, collapse = ", ")))
 
 
   # max.levels: ----
@@ -476,8 +482,10 @@ fftrees_create <- function(formula = NULL,
 
   }
 
-  testthat::expect_true(!is.null(max.levels), info = "max.levels is NULL")
-  testthat::expect_true(max.levels %in% 1:6, info = "max.levels must be an integer between 1 and 6")
+  if(is.null(max.levels)) stop("max.levels is NULL")
+  # testthat::expect_true(!is.null(max.levels), info = "max.levels is NULL")
+  if(!(max.levels %in% 1:6)) stop("max.levels must be an integer between 1 and 6")
+  # testthat::expect_true(max.levels %in% 1:6, info = "max.levels must be an integer between 1 and 6")
 
 
   # cost.outcomes: ----
@@ -527,10 +535,12 @@ fftrees_create <- function(formula = NULL,
   }
 
   # Verify cost.outcomes:
-  testthat::expect_true(!is.null(cost.outcomes), info = "cost.outcomes is NULL")
-  testthat::expect_type(cost.outcomes, type = "list")
-  testthat::expect_true(all(names(cost.outcomes) %in% c("hi", "fa", "mi", "cr")),
-                        info = "cost.outcomes must be a list in the form list(hi = a, fa = b, mi = c, cr = d)")
+  if(is.null(cost.outcomes)) stop("cost.outcomes is NULL")
+  # testthat::expect_true(!is.null(cost.outcomes), info = "cost.outcomes is NULL")
+  if (typeof(cost.outcomes) != "list") stop("cost.outcomes must be of type list()")
+  # testthat::expect_type(cost.outcomes, type = "list")
+  if(all(names(cost.outcomes) %in% c("hi", "fa", "mi", "cr"))) stop("cost.outcomes must be a list in the form list(hi = a, fa = b, mi = c, cr = d)")
+  # testthat::expect_true(all(names(cost.outcomes) %in% c("hi", "fa", "mi", "cr")), info = "cost.outcomes must be a list in the form list(hi = a, fa = b, mi = c, cr = d)")
 
 
   # cost.cues: ----
@@ -583,36 +593,42 @@ fftrees_create <- function(formula = NULL,
   # str(cost.cues)  # 4debugging
 
   # Verify cost.cues:
-  testthat::expect_true(!is.null(cost.cues), info = "cost.cues is NULL")
-  testthat::expect_type(cost.cues, type = "list")
-  testthat::expect_true(all(names(cost.cues) %in% names(data)),
-                        info = "At least one of the cue names specified in cost.cues is not in data")
+  if(is.null(cost.cues)) stop("cost.cues is NULL")
+  # testthat::expect_true(!is.null(cost.cues), info = "cost.cues is NULL")
+  if (typeof(cost.cues) != "list") stop("cost.cues must be of type list()")
+  # testthat::expect_type(cost.cues, type = "list")
+  if(!(all(names(cost.cues) %in% names(data)))) stop("At least one of the cue names specified in cost.cues is not in data")
+  # testthat::expect_true(all(names(cost.cues) %in% names(data)), info = "At least one of the cue names specified in cost.cues is not in data")
 
 
   # stopping.rule: ----
 
-  testthat::expect_true(stopping.rule %in% stopping_rules,  # use global constant
-                        info = paste0("The stopping.rule must be in ('", paste(stopping_rules, collapse = "', '"), "')"))
+  if(!(stopping.rule %in% stopping_rules)) stop("The stopping.rule must be in ('",paste(stopping_rules, collapse = "', '"), "')")
+  # testthat::expect_true(stopping.rule %in% stopping_rules, info = paste0("The stopping.rule must be in ('", paste(stopping_rules, collapse = "', '"), "')"))
 
   # stopping.par: ----
 
   if (stopping.rule == "exemplars"){ # default: 0 < stopping.par < 1:
 
-    testthat::expect_gt(stopping.par, expected = 0)
-    testthat::expect_lt(stopping.par, expected = 1)
+    if (!(stopping.par > 0 && stopping.par < 1)) stop("!(stopping.par > 0 && stopping.par < 1)")
+    # testthat::expect_gt(stopping.par, expected = 0)
+    # testthat::expect_lt(stopping.par, expected = 1)
 
   } else if (stopping.rule == "levels"){ # stopping.par must be a positive integer:
 
     stopping.par <- as.integer(stopping.par)  # aim to coerce to integer
 
-    testthat::expect_true(is.integer(stopping.par))
-    testthat::expect_gt(stopping.par, expected = 0)
+    if (!(is.integer(stopping.par))) stop("!(is.integer(stopping.par))")
+    # testthat::expect_true(is.integer(stopping.par))
+    if (!(stopping.par > 0)) stop("!(stopping.par > 0)")
+    # testthat::expect_gt(stopping.par, expected = 0)
 
   } else if (stopping.rule == "statdelta"){ # stopping.par must numeric:
 
     stopping.par <- as.numeric(stopping.par)  # aim to coerce to numeric
 
-    testthat::expect_true(is.numeric(stopping.par))
+    if (!(is.numeric(stopping.par))) stop("!(is.numeric(stopping.par))")
+    # testthat::expect_true(is.numeric(stopping.par))
 
   } else { # unknown stopping.rule:
 
@@ -639,13 +655,16 @@ fftrees_create <- function(formula = NULL,
 
   # decision.labels: ----
 
-  testthat::expect_true(!is.null(decision.labels), info = "decision.labels is NULL")
-  testthat::expect_equal(length(decision.labels), 2)
+  if(is.null(decision.labels)) stop("decision.labels is NULL")
+  # testthat::expect_true(!is.null(decision.labels), info = "decision.labels is NULL")
+  if (length(decision.labels) != 2) stop("length(decision.labels) != 2")
+  # testthat::expect_equal(length(decision.labels), 2)
 
 
   # repeat.cues: ----
 
-  testthat::expect_type(repeat.cues, type = "logical")
+  if(type(repeat.cues) != "logical") stop("type(repeat.cues) != logical")
+  # testthat::expect_type(repeat.cues, type = "logical")
 
 
   # 2. Verify and pre-process criterion and data: ------

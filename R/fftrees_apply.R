@@ -119,7 +119,7 @@ fftrees_apply <- function(x,
       cost_cue = na_vec,
       cost_dec = na_vec,
       cost = na_vec,
-      current_decision = na_vec
+      current_decision = na_vec,
       row.names = NULL,
       stringsAsFactors = FALSE
     )

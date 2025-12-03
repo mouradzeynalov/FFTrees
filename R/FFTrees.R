@@ -313,7 +313,8 @@ FFTrees <- function(formula = NULL,
   if (!is.null(object)) { # an FFTrees object is provided:
 
     # Verify:
-    testthat::expect_s3_class(object, class = "FFTrees")
+    if (class(object) != "FFTrees") stop("Object is not of class [FFTrees]")
+    # testthat::expect_s3_class(object, class = "FFTrees")
 
     # Fill in some missing defaults by current object values:
 
@@ -359,8 +360,8 @@ FFTrees <- function(formula = NULL,
 
     # ToDo: Verify integrity of tree definitions:
     # 1. tree.definitions contains valid tree definitions (in appropriate format):
-    browser()
-    testthat::expect_true(verify_ffts_df(tree.definitions))
+    if (!verify_ffts_df(tree.definitions)) stop()
+    # testthat::expect_true(verify_ffts_df(tree.definitions))
 
     # 2. tree.definitions fit to provided data (see verify_all_cues_in_data() in helper.R)
 

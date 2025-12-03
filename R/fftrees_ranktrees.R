@@ -57,23 +57,36 @@ fftrees_ranktrees <- function(x,
 
   # 2. Sort tree rankings by goal (in df): ----
 
-  tree_rank_df <- data.frame(
-    tree = 1:nrow(tree_stats),
-    tree_new = tree_rank
-  ) %>%
-    dplyr::arrange(tree_new)
+  # Base R
+  tree_rank_df <- data.frame(tree = 1:nrow(tree_stats), tree_new = tree_rank)
+  tree_rank_df <- tree_rank_df[order(tree_rank_df$tree_new), ]
+
+  # tree_rank_df <- data.frame(
+  #   tree = 1:nrow(tree_stats),
+  #   tree_new = tree_rank
+  # ) %>%
+  #   dplyr::arrange(tree_new)
+
 
 
   # 3. Update elements of FFTrees x: ----
 
   # Tree definitions:
-  x$trees$definitions <- x$trees$definitions %>%
-    dplyr::left_join(tree_rank_df, by = "tree") %>%
-    dplyr::select(-tree) %>%
-    dplyr::rename(tree = tree_new) %>%
-    dplyr::select(tree, dplyr::everything()) %>%
-    dplyr::arrange(tree) %>%
-    tibble::as_tibble()
+  # Base R
+  defs <- merge(x$trees$definitions, tree_rank_df, by = "tree", all.x = TRUE, sort = FALSE)
+  defs$tree <- defs$tree_new
+  defs$tree_new <- NULL
+  defs <- defs[, c("tree", setdiff(names(defs), "tree"))]
+  defs <- defs[order(defs$tree), ]
+  x$trees$definitions <- tibble::as_tibble(defs)
+
+  # x$trees$definitions <- x$trees$definitions %>%
+  #   dplyr::left_join(tree_rank_df, by = "tree") %>%
+  #   dplyr::select(-tree) %>%
+  #   dplyr::rename(tree = tree_new) %>%
+  #   dplyr::select(tree, dplyr::everything()) %>%
+  #   dplyr::arrange(tree) %>%
+  #   tibble::as_tibble()
 
 
   # For training data: ----
@@ -81,22 +94,37 @@ fftrees_ranktrees <- function(x,
   if (data == "train"){
 
     # Training stats:
-    x$trees$stats$train <- x$trees$stats$train %>%
-      dplyr::left_join(tree_rank_df, by = "tree") %>%
-      dplyr::select(-tree) %>%
-      dplyr::rename(tree = tree_new) %>%
-      dplyr::select(tree, dplyr::everything()) %>%
-      dplyr::arrange(tree) %>%
-      tibble::as_tibble()
+    # Base R
+    stats_train <- merge(x$trees$stats$train, tree_rank_df, by = "tree", all.x = TRUE, sort = FALSE)
+    stats_train$tree <- stats_train$tree_new
+    stats_train$tree_new <- NULL
+    stats_train <- stats_train[, c("tree", setdiff(names(stats_train), "tree"))]
+    stats_train <- stats_train[order(stats_train$tree), ]
+    x$trees$stats$train <- tibble::as_tibble(stats_train)
+
+    # x$trees$stats$train <- x$trees$stats$train %>%
+    #   dplyr::left_join(tree_rank_df, by = "tree") %>%
+    #   dplyr::select(-tree) %>%
+    #   dplyr::rename(tree = tree_new) %>%
+    #   dplyr::select(tree, dplyr::everything()) %>%
+    #   dplyr::arrange(tree) %>%
+    #   tibble::as_tibble()
 
     # Training level_stats:
-    x$trees$level_stats$train <- x$trees$level_stats$train %>%
-      dplyr::left_join(tree_rank_df, by = "tree") %>%
-      dplyr::select(-tree) %>%
-      dplyr::rename(tree = tree_new) %>%
-      dplyr::select(tree, dplyr::everything()) %>%
-      dplyr::arrange(tree, level) %>%
-      tibble::as_tibble()
+    l_stats <- merge(x$trees$level_stats$train, tree_rank_df, by = "tree", all.x = TRUE, sort = FALSE)
+    l_stats$tree <- l_stats$tree_new
+    l_stats$tree_new <- NULL
+    l_stats <- l_stats[, c("tree", setdiff(names(l_stats), "tree"))]
+    l_stats <- l_stats[order(l_stats$tree, l_stats$level), ]
+    x$trees$level_stats$train <- tibble::as_tibble(l_stats)
+
+    # x$trees$level_stats$train <- x$trees$level_stats$train %>%
+    #   dplyr::left_join(tree_rank_df, by = "tree") %>%
+    #   dplyr::select(-tree) %>%
+    #   dplyr::rename(tree = tree_new) %>%
+    #   dplyr::select(tree, dplyr::everything()) %>%
+    #   dplyr::arrange(tree, level) %>%
+    #   tibble::as_tibble()
 
     # Training decisions:
     x$trees$decisions$train <- x$trees$decisions$train[tree_rank_df$tree]

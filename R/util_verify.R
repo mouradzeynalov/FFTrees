@@ -45,7 +45,7 @@ verify_data_and_criterion <- function(data, criterion_name, mydata){
 
   } else { # allow_NA_crit: the criterion must maximally contain 3 distinct values:
 
-    if (length(unique(data[[criterion_name]])) != 4) stop("length(unique(data[[criterion_name]])), expected = 4")
+    if (!(length(unique(data[[criterion_name]])) < 4)) stop("length(unique(data[[criterion_name]])) !< 4")
     # testthat::expect_lt(length(unique(data[[criterion_name]])), expected = 4)#,
     # info = "The criterion variable must only contain binary values, plus optional NA values")
 

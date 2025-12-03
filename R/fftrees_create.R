@@ -663,7 +663,7 @@ fftrees_create <- function(formula = NULL,
 
   # repeat.cues: ----
 
-  if(type(repeat.cues) != "logical") stop("type(repeat.cues) != logical")
+  if(typeof(repeat.cues) != "logical") stop("typeof(repeat.cues) != logical")
   # testthat::expect_type(repeat.cues, type = "logical")
 
 

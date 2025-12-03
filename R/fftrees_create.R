@@ -539,7 +539,7 @@ fftrees_create <- function(formula = NULL,
   # testthat::expect_true(!is.null(cost.outcomes), info = "cost.outcomes is NULL")
   if (typeof(cost.outcomes) != "list") stop("cost.outcomes must be of type list()")
   # testthat::expect_type(cost.outcomes, type = "list")
-  if(all(names(cost.outcomes) %in% c("hi", "fa", "mi", "cr"))) stop("cost.outcomes must be a list in the form list(hi = a, fa = b, mi = c, cr = d)")
+  if(!(all(names(cost.outcomes) %in% c("hi", "fa", "mi", "cr")))) stop("cost.outcomes must be a list in the form list(hi = a, fa = b, mi = c, cr = d)")
   # testthat::expect_true(all(names(cost.outcomes) %in% c("hi", "fa", "mi", "cr")), info = "cost.outcomes must be a list in the form list(hi = a, fa = b, mi = c, cr = d)")
 
 

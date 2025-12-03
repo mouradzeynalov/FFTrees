@@ -229,7 +229,6 @@ add_stats <- function(data, # df with frequency counts of classification outcome
 #' @param na_prediction_action What happens when no prediction is possible? (Experimental and currently unused.)
 #'
 #' @importFrom stats qnorm
-#' @importFrom caret confusionMatrix
 
 
 classtable <- function(prediction_v = NULL,
@@ -403,34 +402,86 @@ classtable <- function(prediction_v = NULL,
       }
 
 
+      # ---------------------------------------------------------
+      # FAST REPLACEMENT FOR CARET::CONFUSIONMATRIX
+      # ---------------------------------------------------------
+
+      # 1. Calculate Frequencies (Vectorized Summation)
+      n <- length(criterion_v)
+      hi <- sum(prediction_v & criterion_v, na.rm = TRUE)  # True Positive
+      cr <- sum(!prediction_v & !criterion_v, na.rm = TRUE) # True Negative
+      fa <- sum(prediction_v & !criterion_v, na.rm = TRUE)  # False Positive
+      mi <- sum(!prediction_v & criterion_v, na.rm = TRUE)  # False Negative
+
+      # 2. Basic Statistics
+
+      # Sensitivity (Recall)
+      sens_denom <- hi + mi
+      sens <- if (sens_denom > 0) hi / sens_denom else 0
+
+      # Specificity
+      spec_denom <- cr + fa
+      spec <- if (spec_denom > 0) cr / spec_denom else 0
+
+      far <- 1 - spec # False Alarm Rate
+
+      # Positive Predictive Value (PPV)
+      ppv_denom <- hi + fa
+      ppv <- if (ppv_denom > 0) hi / ppv_denom else NA
+
+      # Negative Predictive Value (NPV)
+      npv_denom <- mi + cr
+      npv <- if (npv_denom > 0) cr / npv_denom else NA
+
+      acc <- (hi + cr) / n # Accuracy
+      bacc <- (sens + spec) / 2 # Balanced Accuracy
+      wacc <- (sens * sens.w) + (spec * (1 - sens.w)) # Weighted Accuracy
+
+      # 3. Accuracy P-Value
+      actual_pos <- hi + mi
+      actual_neg <- cr + fa
+      nir <- max(actual_pos, actual_neg) / n # No Information Rate
+
+      # Only run binom.test if we have data
+      if (n > 0) {
+        acc_p <- stats::binom.test(
+          x = (hi + cr),
+          n = n,
+          p = nir,
+          alternative = "greater"
+        )$p.value
+      } else {
+        acc_p <- NA
+      }
+
       # Use caret::confusionMatrix:
-      cm <- caret::confusionMatrix(table(prediction_v, criterion_v),
-                                   positive = "TRUE")
+      # cm <- caret::confusionMatrix(table(prediction_v, criterion_v),
+      #                              positive = "TRUE")
 
-      cm_byClass <- data.frame(as.list(cm$byClass))
-      cm_overall <- data.frame(as.list(cm$overall))
+      # cm_byClass <- data.frame(as.list(cm$byClass))
+      # cm_overall <- data.frame(as.list(cm$overall))
 
-      # Get 4 freq counts:
-      hi <- cm$table[2, 2]
-      fa <- cm$table[2, 1]
-      mi <- cm$table[1, 2]
-      cr <- cm$table[1, 1]
+      # # Get 4 freq counts:
+      # hi <- cm$table[2, 2]
+      # fa <- cm$table[2, 1]
+      # mi <- cm$table[1, 2]
+      # cr <- cm$table[1, 1]
 
-      N <- (hi + mi + fa + cr)
+      # N <- (hi + mi + fa + cr)
 
-      # Get (or compute) statistics:
-      sens <- cm_byClass$Sensitivity
-      spec <- cm_byClass$Specificity
-      far  <- (1 - spec)
+      # # Get (or compute) statistics:
+      # sens <- cm_byClass$Sensitivity
+      # spec <- cm_byClass$Specificity
+      # far  <- (1 - spec)
 
-      ppv <- cm_byClass$Pos.Pred.Value
-      npv <- cm_byClass$Neg.Pred.Value
+      # ppv <- cm_byClass$Pos.Pred.Value
+      # npv <- cm_byClass$Neg.Pred.Value
 
-      acc   <- cm_overall$Accuracy
-      acc_p <- cm_overall$AccuracyPValue
-      bacc  <- cm_byClass$Balanced.Accuracy
-      wacc  <- (sens * sens.w) + (spec * (1 - sens.w))  # (use values from above)
-      # wacc  <- (cm_byClass$Sensitivity * sens.w) + (cm_byClass$Specificity * (1 - sens.w))
+      # acc   <- cm_overall$Accuracy
+      # acc_p <- cm_overall$AccuracyPValue
+      # bacc  <- cm_byClass$Balanced.Accuracy
+      # wacc  <- (sens * sens.w) + (spec * (1 - sens.w))  # (use values from above)
+      # # wacc  <- (cm_byClass$Sensitivity * sens.w) + (cm_byClass$Specificity * (1 - sens.w))
 
 
       # dprime:

@@ -109,17 +109,19 @@ fftrees_apply <- function(x,
 
   #  1. [decisions_ls]: ----
   #     A list containing tibbles, with 1 element per tree and 1 row per case:
-
+  na_vec <- rep.int(NA, criterion_n)
   decisions_ls <- lapply(1:n_trees, FUN = function(i) {
 
-    tibble::tibble(
+    data.frame(
       criterion = criterion_v,
-      decision = rep(NA, criterion_n),
-      levelout = rep(NA, criterion_n),
-      cost_cue = rep(NA, criterion_n),
-      cost_dec = rep(NA, criterion_n),
-      cost = rep(NA, criterion_n),
-      current_decision = rep(NA, criterion_n)
+      decision = na_vec,
+      levelout = na_vec,
+      cost_cue = na_vec,
+      cost_dec = na_vec,
+      cost = na_vec,
+      current_decision = na_vec
+      row.names = NULL,
+      stringsAsFactors = FALSE
     )
 
   })

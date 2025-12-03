@@ -446,7 +446,7 @@ fftrees_create <- function(formula = NULL,
 
   numthresh.method_valid <- c("optimise", "median")
 
-  if(!substr(numthresh.method)) stop("numthresh.method is not valid\nTry one of the following: ", paste(numthresh.method_valid, collapse = ", "))
+  if(!substr(numthresh.method, 1, 1) %in% substr(numthresh.method_valid, 1, 1)) stop("numthresh.method is not valid\nTry one of the following: ", paste(numthresh.method_valid, collapse = ", "))
   # testthat::expect_true(substr(numthresh.method, 1, 1) %in% substr(numthresh.method_valid, 1, 1), info = paste0( "numthresh.method is not valid\nTry one of the following: ", paste(numthresh.method_valid, collapse = ", ")))
 
 

@@ -475,6 +475,11 @@ FFTrees <- function(formula = NULL,
                           digits = 2)
 
 
+  # Clear out unecessary return values
+  x$data            <- NULL
+  x$competition     <- NULL
+  x$trees$decisions <- NULL
+
 
   # Provide user feedback: ----
 
